@@ -1,0 +1,11 @@
+package webservice;
+import javax.jws.WebService;
+
+@WebService(endpointInterface="webservice.HelloWorld")
+public class BanlWebSericeImpl implements HelloWorld{
+
+ public String helloWorld(String name) {
+  return "Hello world from "+name;
+ }
+
+}

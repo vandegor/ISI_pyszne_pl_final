@@ -1,0 +1,15 @@
+package webservice;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+import Model.Bank.Tranzakcja;
+
+@WebService
+public interface BankWebService {
+
+	@WebMethod
+	public String helloWorld(String name);
+
+	public Tranzakcja pobierzTranzakcje();
+}

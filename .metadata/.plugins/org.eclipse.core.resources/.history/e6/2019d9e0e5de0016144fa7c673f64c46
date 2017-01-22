@@ -1,0 +1,148 @@
+package webservice;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jws.WebService;
+
+import com.j256.ormlite.support.ConnectionSource;
+
+import DaoImpl.AdresDaoImpl;
+import DaoImpl.Restauracja.PozycjaZamowieniaDaoImpl;
+import DaoImpl.Restauracja.ProduktDaoImpl;
+import DaoImpl.Restauracja.StatusDaoImpl;
+import DaoImpl.Restauracja.ZamowienieDaoImpl;
+import DaoInterface.AdresDao;
+import DaoInterface.Restauracja.PozycjaZamowieniaDao;
+import DaoInterface.Restauracja.ProduktDao;
+import DaoInterface.Restauracja.StatusDao;
+import DaoInterface.Restauracja.ZamowienieDao;
+import Model.Adres;
+import Model.Bank.Tranzakcja;
+import Model.Restauracja.PozycjaZamowienia;
+import Model.Restauracja.Produkt;
+import Model.Restauracja.Status;
+import Model.Restauracja.Zamowienie;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.AdresXml;
+import xmlObjects.KatalogProduktowXml;
+import xmlObjects.PozycjaZamowieniaXml;
+import xmlObjects.ProduktXml;
+import xmlObjects.ZamowienieXml;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+	@Override
+	public KatalogProduktowXml pobierzKatalogProduktow() {
+		KatalogProduktowXml katalog = null;
+		ConnectionSource source = null;
+		try {
+			source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			List<Produkt> produkty = new ProduktDaoImpl(source).queryForAll();
+			katalog = new KatalogProduktowXml();
+			katalog.produkty = new ArrayList<ProduktXml>();
+			for (Produkt produkt : produkty) {
+				ProduktXml produktXml = new ProduktXml();
+				produktXml.id = produkt.getId();
+				produktXml.nazwa = produkt.getNazwa();
+				produktXml.cena = produkt.getCena();
+				katalog.produkty.add(produktXml);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		source.closeQuietly();
+		return katalog;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(ZamowienieXml zamowienieXml) {
+		ConnectionSource source = null;
+		try {
+			source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			ZamowienieDao zamowienieDao = new ZamowienieDaoImpl(source);
+			PozycjaZamowieniaDao pozycjaZamowieniaDao = new PozycjaZamowieniaDaoImpl(source);
+			StatusDao statusDao = new StatusDaoImpl(source);
+			AdresDao adresDao = new AdresDaoImpl(source);
+			ProduktDao produktDao = new ProduktDaoImpl(source);
+
+			Zamowienie zamowienie = new Zamowienie();
+			zamowienie.setDataDostawy(null);
+			zamowienie.setDataZamowienia(zamowienieXml.dataZamowienia);
+			zamowienie.setStatus(statusDao.queryForId(1));
+			AdresXml aXml = zamowienieXml.adres;
+			Adres adres = new Adres(aXml.miejscowosc, aXml.ulica, aXml.kodpocztowy, aXml.numerBudynku,
+					aXml.numerlokalu);
+			adresDao.create(adres);
+			zamowienie.setAdres(adres);
+			zamowienieDao.create(zamowienie);
+			for (PozycjaZamowieniaXml pzXml : zamowienieXml.pozycjeZamowienia) {
+				PozycjaZamowienia pozycjaZamowienia = new PozycjaZamowienia();
+				pozycjaZamowienia.setZamowienie(zamowienie);
+				pozycjaZamowienia.setNrPozycji(pzXml.nrPozycji);
+				pozycjaZamowienia.setProdukt(produktDao.queryForId(pzXml.produkt.id));
+				pozycjaZamowienia.setIlosc(pzXml.ilosc);
+				pozycjaZamowienia.setCenaJednostkowa(pzXml.cenaJednostkowa);
+				pozycjaZamowieniaDao.create(pozycjaZamowienia);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		source.closeQuietly();
+		return true;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(Integer nrZamowienia) {
+		ConnectionSource source = null;
+		try {
+			source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			BankWebServiceImplService BankWebService = new BankWebServiceImplService();
+			BankWebService BankWeb = BankWebService.getBankWebServiceImplPort();
+			TranzakcjaXml tXml = BankWeb.pobierzTranzakcje(nrZamowienia.toString());
+			Float kwota = tXml.getKwota();
+			Float suma = 0f;
+
+			
+			ZamowienieDao zamowienieDao = new ZamowienieDaoImpl(source);
+			StatusDao statusDao = new StatusDaoImpl(source);
+			Status status = statusDao.queryForId(2);
+			Zamowienie zamowienie = zamowienieDao.queryForId(nrZamowienia);
+
+			for (PozycjaZamowienia pz : zamowienie.getPozycjeZamowienia()) {
+				suma += pz.getIlosc() * pz.getCenaJednostkowa();
+			}
+			if (kwota.compareTo(suma) >= 0) {
+				zamowienie.setStatus(status);
+				zamowienieDao.update(zamowienie);
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		source.closeQuietly();
+		return true;
+	}
+
+	@Override
+	public String sprawdzStatus(Integer nrZamowienia) {
+		ConnectionSource source = null;
+		try {
+			source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			ZamowienieDao zamowienieDao = new ZamowienieDaoImpl(source);
+			Zamowienie zamowienie = zamowienieDao.queryForId(nrZamowienia);
+			StatusDao statusDao = new StatusDaoImpl(source);
+			statusDao.refresh(zamowienie.getStatus());
+			return zamowienie.getStatus().getStatus();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

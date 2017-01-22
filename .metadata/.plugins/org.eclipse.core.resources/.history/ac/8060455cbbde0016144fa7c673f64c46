@@ -1,0 +1,21 @@
+package xmlObjects;
+
+import javax.xml.bind.annotation.XmlElement;
+
+public class PozycjaZamowieniaXml {
+
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@XmlElement(name = "nrPozycji")
+	private Integer nrPozycji;
+
+	@XmlElement(name = "produkt")
+	private ProduktXml produkt;
+
+	@XmlElement(name = "ilosc")
+	private Integer ilosc;
+
+	@XmlElement(name = "cenaJednostkowa")
+	private Float cenaJednostkowa;
+}

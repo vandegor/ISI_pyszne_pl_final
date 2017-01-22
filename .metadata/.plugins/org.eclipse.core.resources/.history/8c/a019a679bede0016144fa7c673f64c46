@@ -1,0 +1,79 @@
+package Model.Bank;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import DaoImpl.Bank.KontoDaoImpl;
+
+@DatabaseTable(daoClass = KontoDaoImpl.class)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Konto")
+public class Konto {
+
+	@DatabaseField(generatedId = true)
+	@XmlElement(name = "id")
+	private Integer id;
+	
+	@DatabaseField
+	@XmlElement(name = "nrKonta")
+	private String nrKonta;
+	
+	@DatabaseField(canBeNull = false, foreign = true)
+	@XmlElement(name = "osobaFizyczna")
+	private OsobaFizyczna osobaFizyczna;
+	
+	@DatabaseField(canBeNull = false, foreign = true)
+	@XmlElement(name = "osobaPrawna")
+	private OsobaPrawna osobaPrawna;
+	
+
+	public Konto() {
+		super();
+	}
+
+	public Konto(String nrKonta, OsobaFizyczna osobaFizyczna, OsobaPrawna osobaPrawna) {
+		super();
+		this.nrKonta = nrKonta;
+		this.osobaFizyczna = osobaFizyczna;
+		this.osobaPrawna = osobaPrawna;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNrKonta() {
+		return nrKonta;
+	}
+
+	public void setNrKonta(String nrKonta) {
+		this.nrKonta = nrKonta;
+	}
+
+	public OsobaFizyczna getOsobaFizyczna() {
+		return osobaFizyczna;
+	}
+
+	public void setOsobaFizyczna(OsobaFizyczna osobaFizyczna) {
+		this.osobaFizyczna = osobaFizyczna;
+	}
+
+	public OsobaPrawna getOsobaPrawna() {
+		return osobaPrawna;
+	}
+
+	public void setOsobaPrawna(OsobaPrawna osobaPrawna) {
+		this.osobaPrawna = osobaPrawna;
+	}
+
+}

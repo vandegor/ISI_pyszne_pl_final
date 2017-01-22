@@ -1,0 +1,33 @@
+package xmlObjects;
+
+import java.sql.Date;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
+@XmlRootElement(name = "status")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ZamowienieXml {
+	@XmlElement(name = "id")
+	public Integer id;
+	
+	@XmlElement(name = "status")
+	public StatusXml status;
+	
+	@XmlElement(name = "adres")
+	public AdresXml adres;
+	
+	@XmlElement(name = "dataZamowienia")
+	public Date dataZamowienia;
+	
+	@XmlElement(name = "dataDostawy")
+	public Date dataDostawy;
+	
+	@XmlElement(name = "pozycjaZamowienia")
+	public List<PozycjaZamowieniaXml> pozycjeZamowienia;
+
+}

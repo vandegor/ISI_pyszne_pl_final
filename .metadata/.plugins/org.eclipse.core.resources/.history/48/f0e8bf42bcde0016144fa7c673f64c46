@@ -1,0 +1,78 @@
+package xmlObjects;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlRootElement(name = "adres")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AdresXml {
+
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@XmlElement(name = "miejscowosc")
+	private String miejscowosc;
+
+	@XmlElement(name = "ulica")
+	private String ulica;
+
+	@XmlElement(name = "kodpocztowy")
+	private String kodpocztowy;
+
+	@XmlElement(name = "numerBudynku")
+	private Integer numerBudynku;
+
+	@XmlElement(name = "numerlokalu")
+	private Integer numerlokalu;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getMiejscowosc() {
+		return miejscowosc;
+	}
+
+	public void setMiejscowosc(String miejscowosc) {
+		this.miejscowosc = miejscowosc;
+	}
+
+	public String getUlica() {
+		return ulica;
+	}
+
+	public void setUlica(String ulica) {
+		this.ulica = ulica;
+	}
+
+	public String getKodpocztowy() {
+		return kodpocztowy;
+	}
+
+	public void setKodpocztowy(String kodpocztowy) {
+		this.kodpocztowy = kodpocztowy;
+	}
+
+	public Integer getNumerBudynku() {
+		return numerBudynku;
+	}
+
+	public void setNumerBudynku(Integer numerBudynku) {
+		this.numerBudynku = numerBudynku;
+	}
+
+	public Integer getNumerlokalu() {
+		return numerlokalu;
+	}
+
+	public void setNumerlokalu(Integer numerlokalu) {
+		this.numerlokalu = numerlokalu;
+	}
+
+}

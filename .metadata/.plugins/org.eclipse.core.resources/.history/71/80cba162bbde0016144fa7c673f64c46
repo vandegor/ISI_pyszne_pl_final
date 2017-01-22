@@ -1,0 +1,21 @@
+package xmlObjects;
+
+import java.sql.Date;
+
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+
+import Model.Adres;
+import Model.Restauracja.PozycjaZamowienia;
+import Model.Restauracja.Status;
+
+public class ZamowienieXml {
+	private Integer id;
+	private Status status;
+	private Adres adres;
+	private Date dataZamowienia;
+	private Date dataDostawy;
+	private List<PozycjaZamowienia> pozycjeZamowienia;
+
+}

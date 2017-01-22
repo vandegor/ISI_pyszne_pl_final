@@ -1,0 +1,21 @@
+package webservice;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import xmlObjects.KatalogProduktowXml;
+import xmlObjects.ZamowienieXml;
+
+@WebService
+public interface RestauracjaWebService {
+
+	@WebMethod
+	public @WebResult KatalogProduktowXml pobierzKatalogProduktow();
+
+	@WebMethod
+	public boolean przyjmijZamowienie(@WebParam(name="zamowienie") ZamowienieXml zamowienie);
+
+	@WebMethod
+	public boolean reazlizujZamowienie(String nrZamowienia);
+}

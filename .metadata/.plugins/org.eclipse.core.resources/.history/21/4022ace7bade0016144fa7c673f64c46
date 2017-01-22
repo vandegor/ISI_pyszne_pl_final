@@ -1,0 +1,29 @@
+package xmlObjects;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+
+@XmlRootElement(name = "adres")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AdresXml {
+
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@XmlElement(name = "miejscowosc")
+	private String miejscowosc;
+
+	@XmlElement(name = "ulica")
+	private String ulica;
+
+	@XmlElement(name = "kodpocztowy")
+	private String kodpocztowy;
+
+	@XmlElement(name = "numerBudynku")
+	private Integer numerBudynku;
+
+	@XmlElement(name = "numerlokalu")
+	private Integer numerlokalu;
+}

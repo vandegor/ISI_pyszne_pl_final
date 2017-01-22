@@ -1,0 +1,91 @@
+package Model.Bank;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import DaoImpl.Bank.OsobaFizycznaDaoImpl;
+import Model.Adres;
+
+@DatabaseTable(daoClass = OsobaFizycznaDaoImpl.class)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "OsobaFizyczna")
+public class OsobaFizyczna {
+	
+	@DatabaseField(generatedId = true)
+	@XmlElement(name = "id")
+	private Integer id;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private String nip;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private String regon;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private String firmaPrzedsiêbiorcy;
+	
+	@DatabaseField(canBeNull = false, foreign = true)
+	@XmlElement(name = "id")
+	private Adres adres;
+
+	public OsobaFizyczna() {
+		super();
+	}
+
+	public OsobaFizyczna(String nip, String regon, String firmaPrzedsiêbiorcy, Adres adres) {
+		super();
+		this.nip = nip;
+		this.regon = regon;
+		this.firmaPrzedsiêbiorcy = firmaPrzedsiêbiorcy;
+		this.adres = adres;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNip() {
+		return nip;
+	}
+
+	public void setNip(String nip) {
+		this.nip = nip;
+	}
+
+	public String getRegon() {
+		return regon;
+	}
+
+	public void setRegon(String regon) {
+		this.regon = regon;
+	}
+
+	public String getFirmaPrzedsiêbiorcy() {
+		return firmaPrzedsiêbiorcy;
+	}
+
+	public void setFirmaPrzedsiêbiorcy(String firmaPrzedsiêbiorcy) {
+		this.firmaPrzedsiêbiorcy = firmaPrzedsiêbiorcy;
+	}
+
+	public Adres getAdres() {
+		return adres;
+	}
+
+	public void setAdres(Adres adres) {
+		this.adres = adres;
+	}
+
+}

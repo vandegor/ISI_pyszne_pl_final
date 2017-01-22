@@ -1,0 +1,10 @@
+package webService;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+@WebService
+public interface Portal {
+	@WebMethod
+	public String helloWorld(String name);
+}

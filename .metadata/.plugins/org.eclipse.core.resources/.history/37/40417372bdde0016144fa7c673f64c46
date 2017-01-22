@@ -1,0 +1,29 @@
+package webservice;
+
+import java.util.Collection;
+
+import javax.jws.WebService;
+
+import Model.Restauracja.Produkt;
+import Model.Restauracja.Zamowienie;
+import xmlObjects.KatalogProduktowXml;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+	@Override
+	public KatalogProduktowXml pobierzKatalogProduktow() {
+		return null;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(ZamowienieXml zamowienie) {
+		return false;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(String nrZamowienia) {
+		return false;
+	}
+
+}

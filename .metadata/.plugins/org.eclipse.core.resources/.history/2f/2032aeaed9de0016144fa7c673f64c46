@@ -1,0 +1,54 @@
+package webservice;
+
+import java.sql.SQLException;
+
+import javax.jws.WebService;
+
+import com.j256.ormlite.support.ConnectionSource;
+
+import DaoImpl.Bank.KontoDaoImpl;
+import DaoImpl.Bank.TranzakcjaDaoImpl;
+import DaoInterface.Bank.KontoDao;
+import DaoInterface.Bank.TranzakcjaDao;
+import Model.Bank.Tranzakcja;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.TranzakcjaXml;
+
+@WebService(endpointInterface = "webservice.BankWebService")
+public class BankWebServiceImpl implements BankWebService {
+
+	@Override
+	public TranzakcjaXml pobierzTranzakcje(String tytul) {
+		TranzakcjaXml tXml = null;
+		try {
+			ConnectionSource source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			TranzakcjaDao tranzakcjaDao = new TranzakcjaDaoImpl(source);
+			KontoDao kontoDao = new KontoDaoImpl(source);
+			for (Tranzakcja t : tranzakcjaDao) {
+				if (t.getTytul().equalsIgnoreCase(tytul)) {
+					tXml = new TranzakcjaXml();
+					tXml.id = t.getId();
+					tXml.kontoPlus = t.getKontoPlus() != null
+							? kontoDao.queryForId(t.getKontoPlus().getId()).getNrKonta() : null;
+					tXml.kontoMinus = t.getKontoMinus() != null
+							? kontoDao.queryForId(t.getKontoMinus().getId()).getNrKonta() : null;
+					tXml.kwota = t.getKwota();
+					tXml.tytul = t.getTytul();
+					tXml.data = t.getData();
+					break;
+				}
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tXml;
+	}
+
+	@Override
+	public TranzakcjaXml utworzTransakcje(String minus, String plus, Float wartosc, String tytul) {
+		return null;
+	}
+
+}

@@ -1,0 +1,14 @@
+package webservice;
+
+import java.util.Collection;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
+import Model.Restauracja.Produkt;
+
+@WebService
+public interface RestauracjaWebService {
+	@WebMethod
+	public Collection<Produkt> pobierzKatalogProduktow();
+}

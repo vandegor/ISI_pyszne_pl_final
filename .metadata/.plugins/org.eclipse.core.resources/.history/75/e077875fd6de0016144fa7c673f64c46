@@ -1,0 +1,35 @@
+package webservice;
+
+import java.sql.SQLException;
+
+import javax.jws.WebService;
+
+import com.j256.ormlite.support.ConnectionSource;
+
+import DaoImpl.Bank.TranzakcjaDaoImpl;
+import DaoInterface.Bank.TranzakcjaDao;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.TranzakcjaXml;
+
+@WebService(endpointInterface = "webservice.BankWebService")
+public class BankWebServiceImpl implements BankWebService {
+
+	@Override
+	public TranzakcjaXml pobierzTranzakcje(String tytul) {
+		try {
+			ConnectionSource source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			TranzakcjaDao tranzakcjaDao = new TranzakcjaDaoImpl(source);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public TranzakcjaXml utworzTransakcje(String minus, String plus, Float wartosc, String tytul) {
+		return null;
+	}
+
+}

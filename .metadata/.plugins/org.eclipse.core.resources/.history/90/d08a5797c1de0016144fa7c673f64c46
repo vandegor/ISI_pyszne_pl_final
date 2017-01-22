@@ -1,0 +1,17 @@
+package webservice;
+
+import javax.jws.WebMethod;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+
+import xmlObjects.TranzakcjaXml;
+
+@WebService
+public interface BankWebService {
+
+	@WebMethod
+	public @WebResult String pobierzTranzakcje(String tytul);
+
+	@WebMethod
+	public @WebResult String utworzTransakcje(String minus, String plus, Float wartosc, String tytul);
+}

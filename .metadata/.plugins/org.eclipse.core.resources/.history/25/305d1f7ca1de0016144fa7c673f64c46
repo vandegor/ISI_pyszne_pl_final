@@ -1,0 +1,12 @@
+package webservice;
+
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "webservice.HelloWorld")
+public class BankWebServiceImpl implements BankWebService {
+
+	public String helloWorld(String name) {
+		return "Hello world from " + name;
+	}
+
+}

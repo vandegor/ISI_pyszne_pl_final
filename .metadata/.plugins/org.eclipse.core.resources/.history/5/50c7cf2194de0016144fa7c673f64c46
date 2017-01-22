@@ -1,0 +1,7 @@
+package test;
+
+import javax.jws.WebMethod;
+@WebService
+public interface Test {
+	 @WebMethod public String helloWorld(String name);
+}

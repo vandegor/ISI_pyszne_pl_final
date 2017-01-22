@@ -1,0 +1,41 @@
+package webservice;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.jws.WebService;
+
+import DaoImpl.Restauracja.ProduktDaoImpl;
+import Model.Restauracja.Produkt;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.KatalogProduktowXml;
+import xmlObjects.ZamowienieXml;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+	@Override
+	public KatalogProduktowXml pobierzKatalogProduktow() {
+		try {
+			List<Produkt> produkty = new ProduktDaoImpl(ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource())
+					.queryForAll();
+			for (Produkt produkt : produkty) {
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(ZamowienieXml zamowienie) {
+		return false;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(String nrZamowienia) {
+		return false;
+	}
+
+}

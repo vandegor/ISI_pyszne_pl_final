@@ -1,0 +1,18 @@
+package xmlObjects;
+
+import java.sql.Date;
+import java.util.List;
+
+import Model.Adres;
+import Model.Restauracja.PozycjaZamowienia;
+import Model.Restauracja.Status;
+
+public class ZamowienieXml {
+	public Integer id;
+	public Status status;
+	public Adres adres;
+	public Date dataZamowienia;
+	public Date dataDostawy;
+	public List<PozycjaZamowienia> pozycjeZamowienia;
+
+}

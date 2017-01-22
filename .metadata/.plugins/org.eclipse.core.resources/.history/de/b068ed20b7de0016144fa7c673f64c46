@@ -1,0 +1,32 @@
+package webservice;
+
+import java.util.Collection;
+
+import javax.jws.WebService;
+
+import Model.Restauracja.Produkt;
+import Model.Restauracja.Zamowienie;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+
+	@Override
+	public Collection<Produkt> pobierzKatalogProduktow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(Zamowienie zamowienie) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(String nrZamowienia) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

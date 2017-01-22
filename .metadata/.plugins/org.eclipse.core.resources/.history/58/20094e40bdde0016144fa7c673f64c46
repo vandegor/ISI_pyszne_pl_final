@@ -1,0 +1,8 @@
+package xmlObjects;
+
+import java.util.List;
+
+public class KatalogProduktowXml {
+	List<ProduktXml> produkty;
+
+}

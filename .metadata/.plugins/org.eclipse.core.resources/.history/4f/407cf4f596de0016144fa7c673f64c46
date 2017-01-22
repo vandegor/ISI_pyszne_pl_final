@@ -1,0 +1,13 @@
+package webService;
+
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "test.Test")
+public class TestImpl implements Portal {
+
+	@Override
+	public String helloWorld(String name) {
+		return null;
+	}
+
+}

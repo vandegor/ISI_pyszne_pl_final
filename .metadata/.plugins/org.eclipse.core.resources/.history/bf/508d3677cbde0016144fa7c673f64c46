@@ -1,0 +1,75 @@
+package webservice;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jws.WebService;
+
+import com.j256.ormlite.support.ConnectionSource;
+
+import DaoImpl.AdresDaoImpl;
+import DaoImpl.Restauracja.PozycjaZamowieniaDaoImpl;
+import DaoImpl.Restauracja.ProduktDaoImpl;
+import DaoImpl.Restauracja.ZamowienieDaoImpl;
+import DaoInterface.AdresDao;
+import DaoInterface.Restauracja.PozycjaZamowieniaDao;
+import DaoInterface.Restauracja.ProduktDao;
+import DaoInterface.Restauracja.ZamowienieDao;
+import Model.Restauracja.PozycjaZamowienia;
+import Model.Restauracja.Produkt;
+import Model.Restauracja.Zamowienie;
+import ModelEnum.StatusEnum;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.KatalogProduktowXml;
+import xmlObjects.ProduktXml;
+import xmlObjects.ZamowienieXml;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+	@Override
+	public KatalogProduktowXml pobierzKatalogProduktow() {
+		KatalogProduktowXml katalog = null;
+		try {
+			ConnectionSource source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			List<Produkt> produkty = new ProduktDaoImpl(source).queryForAll();
+			katalog = new KatalogProduktowXml();
+			katalog.produkty = new ArrayList<ProduktXml>();
+			for (Produkt produkt : produkty) {
+				ProduktXml produktXml = new ProduktXml();
+				produktXml.id = produkt.getId();
+				produktXml.nazwa = produkt.getNazwa();
+				produktXml.cena = produkt.getCena();
+				katalog.produkty.add(produktXml);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return katalog;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(ZamowienieXml zamowienieXml) {
+		try {
+			ConnectionSource source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+			ZamowienieDao zamowienieDao = new ZamowienieDaoImpl(source);
+			PozycjaZamowieniaDao pozycjaZamowieniaDao = new PozycjaZamowieniaDaoImpl(source);
+			AdresDao adresDao = new AdresDaoImpl(source);
+			ProduktDao produktDao = new ProduktDaoImpl(source);
+			Zamowienie zamowienie = new Zamowienie();
+			zamowienie.setDataDostawy(null);
+			zamowienie.setDataZamowienia(zamowienieXml.dataZamowienia);
+			zamowienie.setStatus(StatusEnum.OCZEKUJACE.name());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(String nrZamowienia) {
+		return false;
+	}
+
+}

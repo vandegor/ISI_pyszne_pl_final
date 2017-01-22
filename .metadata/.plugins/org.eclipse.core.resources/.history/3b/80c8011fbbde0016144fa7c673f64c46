@@ -1,0 +1,27 @@
+package xmlObjects;
+
+import java.sql.Date;
+
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+
+import Model.Adres;
+import Model.Restauracja.PozycjaZamowienia;
+import Model.Restauracja.Status;
+
+public class ZamowienieXml {
+	@DatabaseField(generatedId = true)
+	private Integer id;
+	@DatabaseField(canBeNull = false, foreign = true)
+	private Status status;
+	@DatabaseField(canBeNull = false, foreign = true)
+	private Adres adres;
+	@DatabaseField
+	private Date dataZamowienia;
+	@DatabaseField
+	private Date dataDostawy;
+	@ForeignCollectionField(eager = true, orderColumnName = "nrPozycji")
+	private ForeignCollection<PozycjaZamowienia> pozycjeZamowienia;
+
+}

@@ -1,0 +1,60 @@
+package webservice;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jws.WebService;
+
+import com.j256.ormlite.support.ConnectionSource;
+
+import DaoImpl.Restauracja.ProduktDaoImpl;
+import DaoImpl.Restauracja.ZamowienieDaoImpl;
+import DaoInterface.Restauracja.ZamowienieDao;
+import Model.Restauracja.Produkt;
+import ModelHelper.ConnectionSourceEnum;
+import xmlObjects.KatalogProduktowXml;
+import xmlObjects.ProduktXml;
+import xmlObjects.ZamowienieXml;
+
+@WebService(endpointInterface = "webservice.RestauracjaWebService")
+public class RestauracjaWebServiceImpl implements RestauracjaWebService {
+
+	@Override
+	public KatalogProduktowXml pobierzKatalogProduktow() {
+		KatalogProduktowXml katalog = null;
+		try {
+			List<Produkt> produkty = new ProduktDaoImpl(ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource())
+					.queryForAll();
+			katalog = new KatalogProduktowXml();
+			katalog.produkty = new ArrayList<ProduktXml>();
+			for (Produkt produkt : produkty) {
+				ProduktXml produktXml = new ProduktXml();
+				produktXml.id = produkt.getId();
+				produktXml.nazwa = produkt.getNazwa();
+				produktXml.cena = produkt.getCena();
+				katalog.produkty.add(produktXml);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return katalog;
+	}
+
+	@Override
+	public boolean przyjmijZamowienie(ZamowienieXml zamowienie) {
+		try {
+		ConnectionSource source = ConnectionSourceEnum.ISI_PYSZNE_PL.getConnectionSource();
+		ZamowienieDao zamowienieDao = new ZamowienieDaoImpl(source);
+				 catch (SQLException e) {
+						e.printStackTrace();
+					}
+		return false;
+	}
+
+	@Override
+	public boolean reazlizujZamowienie(String nrZamowienia) {
+		return false;
+	}
+
+}

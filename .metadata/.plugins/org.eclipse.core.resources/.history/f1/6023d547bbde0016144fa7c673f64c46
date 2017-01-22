@@ -1,0 +1,26 @@
+package xmlObjects;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import com.j256.ormlite.field.DatabaseField;
+
+import Model.Restauracja.Produkt;
+import Model.Restauracja.Zamowienie;
+
+public class PozycjaZamowieniaXml {
+
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@XmlElement(name = "nrPozycji")
+	private Integer nrPozycji;
+
+	@XmlElement(name = "produkt")
+	private Produkt produkt;
+
+	@XmlElement(name = "ilosc")
+	private Integer ilosc;
+
+	@XmlElement(name = "cenaJednostkowa")
+	private Float cenaJednostkowa;
+}

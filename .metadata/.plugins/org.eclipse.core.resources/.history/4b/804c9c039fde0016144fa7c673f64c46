@@ -1,0 +1,5 @@
+package org.arpit.javapostsforlearning.webservice;
+
+public class HelloWorldImpl {
+
+}

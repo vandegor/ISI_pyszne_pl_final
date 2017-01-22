@@ -1,0 +1,15 @@
+package webservice;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import Model.Bank.Konto;
+import Model.Bank.Tranzakcja;
+
+@WebService
+public interface BankWebService {
+
+	@WebMethod
+	public @Web Tranzakcja pobierzTranzakcje(@WebParam Konto konto);
+}

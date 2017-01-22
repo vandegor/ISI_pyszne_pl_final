@@ -1,0 +1,21 @@
+package xmlObjects;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import com.j256.ormlite.field.DatabaseField;
+
+public class ProduktXml {
+	@DatabaseField(generatedId = true)
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@DatabaseField
+	@XmlElement(name = "nazwa")
+	private String nazwa;
+
+	@DatabaseField
+	@XmlElement(name = "cena")
+	private Double cena;
+
+
+}

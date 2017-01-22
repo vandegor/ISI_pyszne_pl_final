@@ -1,0 +1,7 @@
+package xmlObjects;
+
+public class StatusXml {
+
+	public Integer id;
+	public String Status;
+}

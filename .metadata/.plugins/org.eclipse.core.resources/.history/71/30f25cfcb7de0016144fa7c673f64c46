@@ -1,0 +1,41 @@
+package Model.Restauracja;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import DaoImpl.Restauracja.ZamowienieDaoImpl;
+
+@DatabaseTable(daoClass = ZamowienieDaoImpl.class)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Konto")
+public class Status {
+	@DatabaseField(generatedId = true)
+	@XmlElement(name = "id")
+	private Integer id;
+
+	@DatabaseField
+	@XmlElement(name = "status")
+	private String status;
+
+	public Status() {
+		super();
+	}
+
+	public Status(String status) {
+		super();
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+}

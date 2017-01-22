@@ -1,0 +1,16 @@
+package xmlObjects;
+
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "produkty")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class KatalogProduktowXml {
+	@XmlElement(name = "produkt")
+	List<ProduktXml> produkty;
+
+}

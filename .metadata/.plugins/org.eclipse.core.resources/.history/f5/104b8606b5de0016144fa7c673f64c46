@@ -1,0 +1,24 @@
+package webservice;
+
+import java.util.Collection;
+
+import javax.jws.WebService;
+
+import Model.Bank.Konto;
+import Model.Bank.Tranzakcja;
+
+@WebService(endpointInterface = "webservice.BankWebService")
+public class BankWebServiceImpl implements BankWebService {
+
+
+	@Override
+	public Tranzakcja pobierzTranzakcje(String tytul) {
+		return null;
+	}
+
+	@Override
+	public Tranzakcja utworzTransakcje(Konto minus, Konto plus, Float wartosc, String tytul) {
+		return null;
+	}
+
+}

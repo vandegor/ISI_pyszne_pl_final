@@ -1,0 +1,95 @@
+package Model;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlAccessType;
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import DaoImpl.AdresDaoImpl;
+
+@DatabaseTable(daoClass = AdresDaoImpl.class)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Adres")
+public class Adres {
+	
+	@DatabaseField(generatedId = true)
+	@XmlElement(name = "id")
+	private Integer id;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private String miejscowosc;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private String ulica;
+	
+	@DatabaseField(width = 5)
+	@XmlElement(name = "id")
+	private String kodpocztowy;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private Integer numerBudynku;
+	
+	@DatabaseField
+	@XmlElement(name = "id")
+	private Integer numerlokalu;
+
+	public Adres() {
+
+	}
+
+	public Adres(String miejscowosc, String ulica, String kodpocztowy, Integer numerBudynku, Integer numerlokalu) {
+		super();
+		this.miejscowosc = miejscowosc;
+		this.ulica = ulica;
+		this.kodpocztowy = kodpocztowy;
+		this.numerBudynku = numerBudynku;
+		this.numerlokalu = numerlokalu;
+	}
+
+	public String getMiejscowosc() {
+		return miejscowosc;
+	}
+
+	public void setMiejscowosc(String miejscowosc) {
+		this.miejscowosc = miejscowosc;
+	}
+
+	public String getUlica() {
+		return ulica;
+	}
+
+	public void setUlica(String ulica) {
+		this.ulica = ulica;
+	}
+
+	public String getKodpocztowy() {
+		return kodpocztowy;
+	}
+
+	public void setKodpocztowy(String kodpocztowy) {
+		this.kodpocztowy = kodpocztowy;
+	}
+
+	public Integer getNumerBudynku() {
+		return numerBudynku;
+	}
+
+	public void setNumerBudynku(Integer numerBudynku) {
+		this.numerBudynku = numerBudynku;
+	}
+
+	public Integer getNumerlokalu() {
+		return numerlokalu;
+	}
+
+	public void setNumerlokalu(Integer numerlokalu) {
+		this.numerlokalu = numerlokalu;
+	}
+
+}
